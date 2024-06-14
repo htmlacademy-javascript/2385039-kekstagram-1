@@ -39,6 +39,7 @@ const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
   const upper = Math.floor(Math.max(a, b));
   const result = Math.random() * (upper - lower + 1) + lower;
+
   return Math.floor(result);
 };
 
@@ -46,8 +47,10 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const createRandomId = () => {
   let lastRandomId = 0;
+
   return () => {
     lastRandomId += 1;
+
     return lastRandomId;
   };
 };
@@ -63,7 +66,6 @@ const createComment = () => ({
   message: createMessage(),
   name: getRandomArrayElement(NAMES),
 });
-createComment();
 
 const createPhotos = (index) => ({
   id: index,
@@ -72,7 +74,6 @@ const createPhotos = (index) => ({
   likes: getRandomInteger(LIKES_MIN, LIKES_MAX),
   comments: Array.from({length: getRandomInteger(0, COMMENTS_COUNT)}, createComment),
 });
-createPhotos();
 
 const createContent = () => Array.from({length: SIMILAR_PHOTO_COUNT}, (_, photoIndex) => createPhotos(photoIndex + 1));
 createContent();
