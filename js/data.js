@@ -1,4 +1,4 @@
-import {getRandomInteger, getRandomArrayElement} from './util.js';
+import {getRandomInteger, getRandomArrayElement} from './utils.js';
 
 const SIMILAR_PHOTO_COUNT = 25;
 const AVATAR_COUNT = 6;
@@ -68,6 +68,5 @@ const createPhotos = (index) => ({
 });
 
 const createContent = () => Array.from({length: SIMILAR_PHOTO_COUNT}, (_, photoIndex) => createPhotos(photoIndex + 1));
-createContent();
 
 export {createContent};
