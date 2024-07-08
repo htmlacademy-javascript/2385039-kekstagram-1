@@ -1,5 +1,5 @@
 import {createContent} from './data.js';
-import {renderPhotos} from './render.js';
+import {renderPicture} from './render.js';
 
-renderPhotos(createContent());
+renderPicture(createContent());
 
