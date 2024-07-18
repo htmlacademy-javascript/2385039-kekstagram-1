@@ -2,11 +2,9 @@ import { isEscapeKey, isEnterKey } from './utils.js';
 import { data } from './main.js';
 /*import {renderPictures} from './render.js';*/
 
-
 const userModalElement = document.querySelector('.big-picture');
 const userModalOpenElement = document.querySelector('.pictures');
 const userModalCloseElement = document.getElementById('picture-cancel');
-
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
@@ -15,7 +13,7 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-function openUserModal () {
+function openUserModal() {
   userModalElement.classList.remove('hidden');
 
   document.addEventListener('keydown', onDocumentKeydown);
@@ -23,7 +21,7 @@ function openUserModal () {
   /*renderPictures();*/
 }
 
-function closeUserModal () {
+function closeUserModal() {
   userModalElement.classList.add('hidden');
 
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -31,19 +29,17 @@ function closeUserModal () {
 
 userModalOpenElement.addEventListener('click', (evt) => {
   const parentElement = evt.target.closest('.picture');
-  const parentElementId = parentElement.dataset.id;
-  const parentElementIdNum = +parentElementId;
+  const parentElementData = parentElement.dataset.id;
+  const parentElementId = +parentElementData;
 
-  const pictureOpen = data.find((item) =>
-    item.id === parentElementIdNum);
+  const pictureOpen = data.find((item) => item.id === parentElementId);
 
   console.log(evt.target);
   console.log(parentElement);
-  console.log(typeof(parentElementIdNum));
+  console.log(parentElementData);
+  console.log(typeof parentElementId);
   openUserModal(pictureOpen);
-
 });
-
 
 userModalOpenElement.addEventListener('keydown', (evt) => {
   if (isEnterKey(evt)) {
@@ -62,4 +58,3 @@ userModalCloseElement.addEventListener('keydown', (evt) => {
 });
 
 export { openUserModal };
-
