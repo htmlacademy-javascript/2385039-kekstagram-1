@@ -2,22 +2,23 @@ const templateFragment = document.querySelector('#picture').content.querySelecto
 const container = document.querySelector('.pictures');
 
 
-const createRender = ({url, description, comments, likes}) => {
-  const renderElement = templateFragment.cloneNode(true);
+const createPictureElement = ({url, description, comments, likes}) => {
+  const pictureElement = templateFragment.cloneNode(true);
 
-  renderElement.querySelector('.picture__img').src = url;
-  renderElement.querySelector('.picture__img').alt = description;
-  renderElement.querySelector('.picture__comments').textContent = comments.length;
-  renderElement.querySelector('.picture__likes').textContent = likes;
+  pictureElement.querySelector('.picture__img').src = url;
+  pictureElement.querySelector('.picture__img').alt = description;
+  pictureElement.querySelector('.picture__comments').textContent = comments.length;
+  pictureElement.querySelector('.picture__likes').textContent = likes;
+  pictureElement.dataset.id = 'id';
 
-  return renderElement;
+  return pictureElement;
 };
 
-const renderPicture = (pictures) => {
+const renderPictures = (pictures) => {
   const fragment = document.createDocumentFragment();
 
   pictures.forEach((picture) => {
-    const createElement = createRender(picture);
+    const createElement = createPictureElement(picture);
     fragment.append(createElement);
   });
 
@@ -25,5 +26,5 @@ const renderPicture = (pictures) => {
 };
 
 
-export { renderPicture };
+export { renderPictures };
 

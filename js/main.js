@@ -1,6 +1,8 @@
 import { createContent } from './data.js';
-import { renderPicture } from './render.js';
+import { renderPictures } from './render.js';
 
 
-renderPicture(createContent());
+const data = createContent();
+renderPictures(data);
 
+export { data };
