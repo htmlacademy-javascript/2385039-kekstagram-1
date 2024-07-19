@@ -1,60 +1,56 @@
-import { isEscapeKey, isEnterKey } from './utils.js';
-import { data } from './main.js';
-/*import {renderPictures} from './render.js';*/
+import { isEscapeKey } from './utils.js';
+import { renderFullsizePicture } from './fullsizepicture-render.js';
 
-const userModalElement = document.querySelector('.big-picture');
-const userModalOpenElement = document.querySelector('.pictures');
-const userModalCloseElement = document.getElementById('picture-cancel');
+const pictureModalElement = document.querySelector('.big-picture');
+const pictureContainerElement = document.querySelector('.pictures');
+const pictureModalCloseElement = document.querySelector('.big-picture__cancel');
 
-const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
-    evt.preventDefault();
-    closeUserModal();
-  }
-};
+const socialCommentsCount = document.querySelector('.social__comment-count');
+const newCommentsLoader = document.querySelector('.comments-loader');
 
-function openUserModal() {
-  userModalElement.classList.remove('hidden');
-
+function openPiсtureModal() {
+  pictureModalElement.classList.remove('hidden');
+  socialCommentsCount.classList.add('hidden');
+  newCommentsLoader.classList.add('hidden');
+  document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 
-  /*renderPictures();*/
+  console.log(pictureModalElement);
 }
 
-function closeUserModal() {
-  userModalElement.classList.add('hidden');
-
+function closePictureModal() {
+  pictureModalElement.classList.add('hidden');
+  document.body.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-userModalOpenElement.addEventListener('click', (evt) => {
+function onDocumentKeydown(evt) {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closePictureModal();
+  }
+}
+
+const onPictureContainerClick = (evt, data) => {
   const parentElement = evt.target.closest('.picture');
-  const parentElementData = parentElement.dataset.id;
-  const parentElementId = +parentElementData;
 
-  const pictureOpen = data.find((item) => item.id === parentElementId);
-
-  console.log(evt.target);
-  console.log(parentElement);
-  console.log(parentElementData);
-  console.log(typeof parentElementId);
-  openUserModal(pictureOpen);
-});
-
-userModalOpenElement.addEventListener('keydown', (evt) => {
-  if (isEnterKey(evt)) {
-    openUserModal();
+  if (!parentElement) {
+    return;
   }
-});
 
-userModalCloseElement.addEventListener('click', () => {
-  closeUserModal();
-});
+  const parentElementId = Number(parentElement.dataset.id);
+  const currentPictureData = data.find((item) => item.id === parentElementId);
 
-userModalCloseElement.addEventListener('keydown', (evt) => {
-  if (isEnterKey(evt)) {
-    closeUserModal();
+  if (currentPictureData) {
+    openPiсtureModal();
+    renderFullsizePicture(currentPictureData);
   }
-});
+};
 
-export { openUserModal };
+export const initPicturePreview = (pictures) => {
+  pictureModalCloseElement.addEventListener('click', closePictureModal);
+
+  pictureContainerElement.addEventListener('click', (evt) =>
+    onPictureContainerClick(evt, pictures)
+  );
+};
