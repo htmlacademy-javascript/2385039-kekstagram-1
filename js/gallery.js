@@ -14,8 +14,6 @@ function openPiсtureModal() {
   newCommentsLoader.classList.add('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-
-  console.log(pictureModalElement);
 }
 
 function closePictureModal() {
