@@ -1,5 +1,8 @@
-import {createContent} from './data.js';
-import {renderPicture} from './render.js';
+import { createContent } from './data.js';
+import { renderPictures } from './picture-render.js';
+import { initPicturePreview } from './gallery.js';
 
-renderPicture(createContent());
 
+const data = createContent();
+renderPictures(data);
+initPicturePreview(data);
