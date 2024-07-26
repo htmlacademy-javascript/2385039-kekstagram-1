@@ -1,9 +1,10 @@
 import { isEscapeKey } from './utils.js';
 
-const pictureUploadForm = document.querySelector('#upload-select-image');
+const pictureUploadForm = document.querySelector('.img-upload__form');
 const pictureUploadOverlay = document.querySelector('.img-upload__overlay');
-const buttonUploadCancel = document.querySelector('#upload-cancel');
+const buttonUploadCancel = document.querySelector('.img-upload__cancel');
 const pictureUploadInput = document.querySelector('.img-upload__input');
+const pictureUploadPreview = document.querySelector('.img-upload__preview img');
 
 
 function onUploadKeydown(evt) {
@@ -20,10 +21,15 @@ function openUploadModal() {
   buttonUploadCancel.addEventListener('click', closeUploadModal);
   document.addEventListener('keydown', onUploadKeydown);
 }
-pictureUploadInput.addEventListener('change', () => {
-  console.log(pictureUploadInput);
+
+const onPictureUploadChange = () => {
+
+  console.log(pictureUploadPreview);
   openUploadModal();
-});
+};
+
+
+pictureUploadInput.addEventListener('change', onPictureUploadChange);
 
 
 function closeUploadModal() {
