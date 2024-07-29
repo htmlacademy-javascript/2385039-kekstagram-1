@@ -36,6 +36,7 @@ const onPictureContainerClick = (evt, data) => {
     return;
   }
 
+  evt.preventDefault();
   const parentElementId = Number(parentElement.dataset.id);
   const currentPictureData = data.find((item) => item.id === parentElementId);
 
