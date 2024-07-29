@@ -58,14 +58,10 @@ pristine
 const onButtonSubmitForm = (evt) => {
   evt.preventDefault();
   const isValid = pristine.validate();
-  if (isValid) {
-    pictureUploadSubmit.disabled = true;
-  } else {
-    pictureUploadSubmit.disabled = false;
-  }
+  console.log(isValid);
 };
 
-pictureUploadForm.addEventListener('submit', onButtonSubmitForm);
+pictureUploadSubmit.addEventListener('submit', onButtonSubmitForm);
 
 
 export const openUploadModal = () => {
