@@ -79,7 +79,7 @@ export const setupValidation = () => {
     .addValidator(hashtagsInput,
       (value) => {
         const hashtagsArray = value.split(' ');
-        return value.length && value[0] === HASHTAG_REGEX[0] || hashtagsArray.every((hashtag) => HASHTAG_REGEX.test(hashtag));
+        return value[0] === HASHTAG_REGEX[0] || hashtagsArray.every((hashtag) => HASHTAG_REGEX.test(hashtag));
       }, (HASHTAG_ERRORS['regexp']));
 
   pictureUploadForm.addEventListener('submit', onFormSubmit);
