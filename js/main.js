@@ -3,6 +3,7 @@ import { renderPictures } from './picture-render.js';
 import { initPicturePreview } from './gallery.js';
 import { setupValidation } from './upload-form.js';
 import { initScale } from './scale.js';
+import './effect.js';
 
 const data = createContent();
 renderPictures(data);
