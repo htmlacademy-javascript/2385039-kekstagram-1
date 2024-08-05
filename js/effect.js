@@ -1,4 +1,4 @@
-const effectElement = {
+const EFFECTS = {
   chrome: {
     range: {
       min: 0,
@@ -53,40 +53,54 @@ const effectElement = {
 
 const pictureUploadPreview = document.querySelector('.img-upload__preview img');
 const effectLevelSlider = document.querySelector('.effect-level__slider');
-const filterEffectContainer = document.querySelector('.effects__list');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const filterUploadEffectLevel = document.querySelector('.effect-level');
-const effectRadioInput = document.querySelector('.effects__radio');
+const effectRadioInput = document.querySelector('.effects');
+const sliderElement = document.querySelector('.img-upload__effect-level');
 
+/*const isDefault = () => {
+  sliderElement.classList.add('hidden');
+  closeSlader();
+};
+
+function closeSlader() {
+  filterUploadEffectLevel.classList.add('hidden');
+}
+
+const openSlader = () => {
+  filterUploadEffectLevel.classList.remove('hidden');
+};
+openSlader();*/
 
 noUiSlider.create(effectLevelSlider, {
   range: {
     min: 0,
     max: 1,
   },
-  start: 0,
+  start: 1,
   step: 0.1,
   connect: 'lower',
   format: {
-    to: function (value) {
-      if (Number.isInteger(value)) {
-        return value.toFixed(0);
-      }
-      return value.toFixed(1);
-    },
-    from: function (value) {
-      return parseFloat(value);
-    },
+    to: (value) => (Number.isInteger(value) ? value : value.toFixed(1)),
+    from: (value) => parseFloat(value),
   },
 });
 
 effectLevelSlider.noUiSlider.on('update', () => {
-  const newLevelValue = effectLevelSlider.noUiSlider.get();
-  effectLevelValue.value = newLevelValue;
+  effectLevelValue.value = effectLevelSlider.noUiSlider.get();
 });
 
-filterEffectContainer.addEventListener('change', (evt) => {
+effectRadioInput.addEventListener('change', (evt) => {
   const targetEffect = evt.target.value;
   console.log(targetEffect);
-});
 
+  pictureUploadPreview.className = '';
+
+  const options = EFFECTS[targetEffect];
+
+  pictureUploadPreview.classList.add('effects__preview');
+  pictureUploadPreview.classList.add(`effects__preview--${targetEffect}`);
+
+  effectLevelSlider.noUiSlider.updateOptions(options);
+  console.log(options);
+});

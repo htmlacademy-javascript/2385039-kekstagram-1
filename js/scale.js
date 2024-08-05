@@ -13,31 +13,23 @@ const changeScalePicture = (value) => {
   pictureUploadPreview.style.transform = `scale(${value / 100})`;
 };
 
-const onButtonScaleBiggerClick = () => {
-  const inputScaleValue = parseInt(scaleControlValue.value, 10);
-  let newScaleValue = inputScaleValue + DEFAULT_SCALE_STEP;
-
-  if (newScaleValue > MAX_SCALE_VALUE) {
-    newScaleValue = MAX_SCALE_VALUE;
-  }
-  changeScalePicture(newScaleValue);
-};
-
 const onButtonScaleSmallerClick = () => {
   const inputScaleValue = parseInt(scaleControlValue.value, 10);
-  let newScaleValue = inputScaleValue - DEFAULT_SCALE_STEP;
+  changeScalePicture(Math.max(inputScaleValue - DEFAULT_SCALE_STEP, MIN_SCALE_VALUE));
+};
 
-  if (newScaleValue < MIN_SCALE_VALUE) {
-    newScaleValue = MIN_SCALE_VALUE;
-  }
-  changeScalePicture(newScaleValue);
+const onButtonScaleBiggerClick = () => {
+  const inputScaleValue = parseInt(scaleControlValue.value, 10);
+  changeScalePicture(Math.min(inputScaleValue + DEFAULT_SCALE_STEP, MAX_SCALE_VALUE));
 };
 
 
 export const resetScaleValue = () => {
   changeScalePicture(DEFAULT_SCALE_VALUE);
-  buttonScaleBigger.addEventListener('click', onButtonScaleBiggerClick);
-  buttonScaleSmaller.addEventListener('click', onButtonScaleSmallerClick);
 };
 
 
+export const initScale = () => {
+  buttonScaleBigger.addEventListener('click', onButtonScaleBiggerClick);
+  buttonScaleSmaller.addEventListener('click', onButtonScaleSmallerClick);
+};
