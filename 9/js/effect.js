@@ -1,4 +1,4 @@
-const effectElement = {
+const EFFECTS = {
   chrome: {
     range: {
       min: 0,
@@ -72,8 +72,6 @@ const openSlader = () => {
 };
 openSlader();*/
 
-effectLevelValue.value = 100;
-
 noUiSlider.create(effectLevelSlider, {
   range: {
     min: 0,
@@ -96,72 +94,13 @@ effectRadioInput.addEventListener('change', (evt) => {
   const targetEffect = evt.target.value;
   console.log(targetEffect);
 
-  if (targetEffect === 'chrome') {
-    pictureUploadPreview.classList = '';
-    pictureUploadPreview.classList.add('effects__preview--chrome');
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 1,
-      },
-      start: 1,
-      step: 0.1,
-    });
-  } else if (targetEffect === 'sepia') {
-    pictureUploadPreview.classList = '';
-    pictureUploadPreview.classList.add('effects__preview--sepia');
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 1,
-      },
-      start: 1,
-      step: 0.1,
-    });
-  } else if (targetEffect === 'marvin') {
-    pictureUploadPreview.classList = '';
-    pictureUploadPreview.classList.add('effects__preview--marvin');
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      start: 0,
-      step: 1,
-    });
-  } else if (targetEffect === 'phobos') {
-    pictureUploadPreview.classList = '';
-    pictureUploadPreview.classList.add('effects__preview--phobos');
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 3,
-      },
-      start: 0,
-      step: 0.1,
-    });
-  } else if (targetEffect === 'heat') {
-    pictureUploadPreview.classList = '';
-    pictureUploadPreview.classList.add('effects__preview--heat');
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 1,
-        max: 3,
-      },
-      start: 0,
-      step: 0.1,
-    });
-  } else {
-    pictureUploadPreview.classList = '';
-    pictureUploadPreview.classList.add('effects__preview--none');
-    effectLevelSlider.noUiSlider.updateOptions({
-      range: {
-        min: 0,
-        max: 100,
-      },
-      start: 100,
-      step: 1,
-    });
-    effectLevelSlider.noUiSlider.set(100);
-  }
+  pictureUploadPreview.className = '';
+
+  const options = EFFECTS[targetEffect];
+
+  pictureUploadPreview.classList.add('effects__preview');
+  pictureUploadPreview.classList.add(`effects__preview--${targetEffect}`);
+
+  effectLevelSlider.noUiSlider.updateOptions(options);
+  console.log(options);
 });
