@@ -15,19 +15,21 @@ const changeScalePicture = (value) => {
 
 const onButtonScaleSmallerClick = () => {
   const inputScaleValue = parseInt(scaleControlValue.value, 10);
-  changeScalePicture(Math.max(inputScaleValue - DEFAULT_SCALE_STEP, MIN_SCALE_VALUE));
+  changeScalePicture(
+    Math.max(inputScaleValue - DEFAULT_SCALE_STEP, MIN_SCALE_VALUE)
+  );
 };
 
 const onButtonScaleBiggerClick = () => {
   const inputScaleValue = parseInt(scaleControlValue.value, 10);
-  changeScalePicture(Math.min(inputScaleValue + DEFAULT_SCALE_STEP, MAX_SCALE_VALUE));
+  changeScalePicture(
+    Math.min(inputScaleValue + DEFAULT_SCALE_STEP, MAX_SCALE_VALUE)
+  );
 };
-
 
 export const resetScaleValue = () => {
   changeScalePicture(DEFAULT_SCALE_VALUE);
 };
-
 
 export const initScale = () => {
   buttonScaleBigger.addEventListener('click', onButtonScaleBiggerClick);

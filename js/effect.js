@@ -78,12 +78,9 @@ noUiSlider.create(effectLevelSlider, {
     max: 1,
   },
   start: 1,
-  start: 1,
   step: 0.1,
   connect: 'lower',
   format: {
-    to: (value) => (Number.isInteger(value) ? value : value.toFixed(1)),
-    from: (value) => parseFloat(value),
     to: (value) => (Number.isInteger(value) ? value : value.toFixed(1)),
     from: (value) => parseFloat(value),
   },
@@ -91,10 +88,8 @@ noUiSlider.create(effectLevelSlider, {
 
 effectLevelSlider.noUiSlider.on('update', () => {
   effectLevelValue.value = effectLevelSlider.noUiSlider.get();
-  effectLevelValue.value = effectLevelSlider.noUiSlider.get();
 });
 
-effectRadioInput.addEventListener('change', (evt) => {
 effectRadioInput.addEventListener('change', (evt) => {
   const targetEffect = evt.target.value;
   console.log(targetEffect);
