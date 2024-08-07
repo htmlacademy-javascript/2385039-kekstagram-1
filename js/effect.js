@@ -5,7 +5,7 @@ const EFFECTS = {
       max: 1,
     },
     effect: 'grayscale',
-    start: 0,
+    start: 1,
     step: 0.1,
     unit: '',
   },
@@ -15,7 +15,7 @@ const EFFECTS = {
       max: 1,
     },
     effect: 'sepia',
-    start: 0,
+    start: 1,
     step: 0.1,
     unit: '',
   },
@@ -25,7 +25,7 @@ const EFFECTS = {
       max: 100,
     },
     effect: 'invert',
-    start: 0,
+    start: 100,
     step: 1,
     unit: '%',
   },
@@ -35,7 +35,7 @@ const EFFECTS = {
       max: 3,
     },
     effect: 'blur',
-    start: 0,
+    start: 3,
     step: 0.1,
     unit: 'px',
   },
@@ -45,7 +45,7 @@ const EFFECTS = {
       max: 3,
     },
     effect: 'brightness',
-    start: 1,
+    start: 3,
     step: 0.1,
     unit: '',
   },
@@ -66,6 +66,10 @@ const showSlader = () => {
   filterUploadEffectLevel.classList.remove('hidden');
 };
 
+const isDefault = () => {
+  pictureUploadPreview.className = '';
+  hideSlader();
+};
 
 noUiSlider.create(effectLevelSlider, {
   range: {
@@ -83,25 +87,26 @@ noUiSlider.create(effectLevelSlider, {
 
 effectLevelSlider.noUiSlider.on('update', () => {
   effectLevelValue.value = effectLevelSlider.noUiSlider.get();
+  /*console.log(effectLevelValue.value);*/
 });
 
 effectRadioInput.addEventListener('change', (evt) => {
   const targetEffect = evt.target.value;
-
+  const options = EFFECTS[targetEffect];
   if (targetEffect === 'none') {
-    pictureUploadPreview.className = '';
-    hideSlader();
+    isDefault();
   } else {
-    const options = EFFECTS[targetEffect];
 
     showSlader();
+
     pictureUploadPreview.className = `effects__preview--${targetEffect}`;
     effectLevelSlider.noUiSlider.updateOptions(options);
-    /*pictureUploadPreview.style.filter = `(${options.style}(${effectLevelValue.value}${options.unit}))`;*/
+    pictureUploadPreview.style.filter = `${options.value}${effectLevelValue.value}`;
   }
 });
 
 
-export const initEffects = () => {
+export const initEffect = () => {
+  pictureUploadPreview.style.filter = '';
 
 };
