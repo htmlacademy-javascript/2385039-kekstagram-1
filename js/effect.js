@@ -57,7 +57,6 @@ const effectLevelValue = document.querySelector('.effect-level__value');
 const filterUploadEffectLevel = document.querySelector('.effect-level');
 const effectRadioInput = document.querySelector('.effects');
 
-
 const hideSlader = () => {
   filterUploadEffectLevel.classList.add('hidden');
 };
@@ -68,6 +67,7 @@ const showSlader = () => {
 
 const isDefault = () => {
   pictureUploadPreview.className = '';
+  pictureUploadPreview.style.filter = '';
   hideSlader();
 };
 
@@ -85,28 +85,28 @@ noUiSlider.create(effectLevelSlider, {
   },
 });
 
-effectLevelSlider.noUiSlider.on('update', () => {
-  effectLevelValue.value = effectLevelSlider.noUiSlider.get();
-  /*console.log(effectLevelValue.value);*/
-});
+const onEffectRadioChancge = () => {
+  effectRadioInput.addEventListener('change', (evt) => {
+    const targetEffect = evt.target.value;
 
-effectRadioInput.addEventListener('change', (evt) => {
-  const targetEffect = evt.target.value;
-  const options = EFFECTS[targetEffect];
-  if (targetEffect === 'none') {
-    isDefault();
-  } else {
+    if (targetEffect === 'none') {
+      isDefault();
+    } else {
+      showSlader();
+      const options = EFFECTS[targetEffect];
+      effectLevelSlider.noUiSlider.on('update', () => {
+        const cssEffect = options.effect;
+        const cssUnit = options.unit;
+        effectLevelValue.value = effectLevelSlider.noUiSlider.get();
+        pictureUploadPreview.style.filter = `${cssEffect}(${effectLevelValue.value}${cssUnit})`;
+      });
 
-    showSlader();
-
-    pictureUploadPreview.className = `effects__preview--${targetEffect}`;
-    effectLevelSlider.noUiSlider.updateOptions(options);
-    pictureUploadPreview.style.filter = `${options.value}${effectLevelValue.value}`;
-  }
-});
-
+      pictureUploadPreview.className = `effects__preview--${targetEffect}`;
+      effectLevelSlider.noUiSlider.updateOptions(options);
+    }
+  });
+};
 
 export const initEffect = () => {
-  pictureUploadPreview.style.filter = '';
-
+  effectRadioInput.addEventListener('change', onEffectRadioChancge);
 };
