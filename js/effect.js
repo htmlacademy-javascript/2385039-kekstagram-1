@@ -56,21 +56,16 @@ const effectLevelSlider = document.querySelector('.effect-level__slider');
 const effectLevelValue = document.querySelector('.effect-level__value');
 const filterUploadEffectLevel = document.querySelector('.effect-level');
 const effectRadioInput = document.querySelector('.effects');
-const sliderElement = document.querySelector('.img-upload__effect-level');
 
-/*const isDefault = () => {
-  sliderElement.classList.add('hidden');
-  closeSlader();
+
+const hideSlader = () => {
+  filterUploadEffectLevel.classList.add('hidden');
 };
 
-function closeSlader() {
-  filterUploadEffectLevel.classList.add('hidden');
-}
-
-const openSlader = () => {
+const showSlader = () => {
   filterUploadEffectLevel.classList.remove('hidden');
 };
-openSlader();*/
+
 
 noUiSlider.create(effectLevelSlider, {
   range: {
@@ -92,15 +87,21 @@ effectLevelSlider.noUiSlider.on('update', () => {
 
 effectRadioInput.addEventListener('change', (evt) => {
   const targetEffect = evt.target.value;
-  console.log(targetEffect);
 
-  pictureUploadPreview.className = '';
+  if (targetEffect === 'none') {
+    pictureUploadPreview.className = '';
+    hideSlader();
+  } else {
+    const options = EFFECTS[targetEffect];
 
-  const options = EFFECTS[targetEffect];
-
-  pictureUploadPreview.classList.add('effects__preview');
-  pictureUploadPreview.classList.add(`effects__preview--${targetEffect}`);
-
-  effectLevelSlider.noUiSlider.updateOptions(options);
-  console.log(options);
+    showSlader();
+    pictureUploadPreview.className = `effects__preview--${targetEffect}`;
+    effectLevelSlider.noUiSlider.updateOptions(options);
+    /*pictureUploadPreview.style.filter = `(${options.style}(${effectLevelValue.value}${options.unit}))`;*/
+  }
 });
+
+
+export const initEffects = () => {
+
+};
