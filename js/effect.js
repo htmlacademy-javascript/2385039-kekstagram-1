@@ -57,15 +57,15 @@ const effectLevelValue = document.querySelector('.effect-level__value');
 const filterUploadEffectLevel = document.querySelector('.effect-level');
 const effectRadioInput = document.querySelector('.effects');
 
-const hideSlader = () => {
-  filterUploadEffectLevel.classList.add('hidden');
-};
-
 const showSlader = () => {
   filterUploadEffectLevel.classList.remove('hidden');
 };
 
-const isDefault = () => {
+const hideSlader = () => {
+  filterUploadEffectLevel.classList.add('hidden');
+};
+
+export const resetEffects = () => {
   pictureUploadPreview.className = '';
   pictureUploadPreview.style.filter = '';
   hideSlader();
@@ -85,28 +85,27 @@ noUiSlider.create(effectLevelSlider, {
   },
 });
 
-const onEffectRadioChancge = () => {
-  effectRadioInput.addEventListener('change', (evt) => {
-    const targetEffect = evt.target.value;
+const onEffectRadioChange = (evt) => {
+  const targetEffect = evt.target.value;
 
-    if (targetEffect === 'none') {
-      isDefault();
-    } else {
-      showSlader();
-      const options = EFFECTS[targetEffect];
-      effectLevelSlider.noUiSlider.on('update', () => {
-        const cssEffect = options.effect;
-        const cssUnit = options.unit;
-        effectLevelValue.value = effectLevelSlider.noUiSlider.get();
-        pictureUploadPreview.style.filter = `${cssEffect}(${effectLevelValue.value}${cssUnit})`;
-      });
+  if (targetEffect === 'none') {
+    resetEffects();
+  } else {
+    showSlader();
+    const options = EFFECTS[targetEffect];
 
-      pictureUploadPreview.className = `effects__preview--${targetEffect}`;
-      effectLevelSlider.noUiSlider.updateOptions(options);
-    }
-  });
+    effectLevelSlider.noUiSlider.on('update', () => {
+      const cssEffect = options.effect;
+      const cssUnit = options.unit;
+      effectLevelValue.value = effectLevelSlider.noUiSlider.get();
+      pictureUploadPreview.style.filter = `${cssEffect}(${effectLevelValue.value}${cssUnit})`;
+    });
+
+    pictureUploadPreview.className = `effects__preview--${targetEffect}`;
+    effectLevelSlider.noUiSlider.updateOptions(options);
+  }
 };
 
 export const initEffect = () => {
-  effectRadioInput.addEventListener('change', onEffectRadioChancge);
+  effectRadioInput.addEventListener('change', onEffectRadioChange);
 };
