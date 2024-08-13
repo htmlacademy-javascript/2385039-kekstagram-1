@@ -66,13 +66,13 @@ export const setFormSubmit = (success) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
-      isOpenAlertMessage(success);
+      isOpenAlertMessage('success');
       blockSubmitButton();
       isResetUploadForm();
       sendData(new FormData(evt.target))
         .then(success)
         .catch((error) => {
-          isOpenAlertMessage(error);
+          isOpenAlertMessage(error, 'error');
         })
         .finally(unblockSubmitButton);
     }
