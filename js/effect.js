@@ -57,55 +57,56 @@ const effectLevelValue = document.querySelector('.effect-level__value');
 const filterUploadEffectLevel = document.querySelector('.effect-level');
 const effectRadioInput = document.querySelector('.effects');
 
-const showSlader = () => {
+const showSlider = () => {
   filterUploadEffectLevel.classList.remove('hidden');
 };
 
-const hideSlader = () => {
+const hideSlider = () => {
   filterUploadEffectLevel.classList.add('hidden');
 };
 
 export const resetEffects = () => {
   pictureUploadPreview.className = '';
   pictureUploadPreview.style.filter = '';
-  hideSlader();
+  hideSlider();
 };
-
-noUiSlider.create(effectLevelSlider, {
-  range: {
-    min: 0,
-    max: 1,
-  },
-  start: 1,
-  step: 0.1,
-  connect: 'lower',
-  format: {
-    to: (value) => (Number.isInteger(value) ? value : value.toFixed(1)),
-    from: (value) => parseFloat(value),
-  },
-});
 
 const onEffectRadioChange = (evt) => {
   const targetEffect = evt.target.value;
 
   if (targetEffect === 'none') {
     resetEffects();
-  } else {
-    showSlader();
-    const options = EFFECTS[targetEffect];
-
-    effectLevelSlider.noUiSlider.on('update', () => {
-      const cssEffect = options.effect;
-      const cssUnit = options.unit;
-      effectLevelValue.value = effectLevelSlider.noUiSlider.get();
-      pictureUploadPreview.style.filter = `${cssEffect}(${effectLevelValue.value}${cssUnit})`;
-    });
-
-    pictureUploadPreview.className = `effects__preview--${targetEffect}`;
-    effectLevelSlider.noUiSlider.updateOptions(options);
+    return;
   }
+
+  showSlider();
+  const options = EFFECTS[targetEffect];
+
+  effectLevelSlider.noUiSlider.on('update', () => {
+    const cssEffect = options.effect;
+    const cssUnit = options.unit;
+    effectLevelValue.value = effectLevelSlider.noUiSlider.get();
+    pictureUploadPreview.style.filter = `${cssEffect}(${effectLevelValue.value}${cssUnit})`;
+  });
+
+  pictureUploadPreview.className = `effects__preview--${targetEffect}`;
+  effectLevelSlider.noUiSlider.updateOptions(options);
 };
 
-export const initEffect = () => {
+export const initEffects = () => {
+  noUiSlider.create(effectLevelSlider, {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    start: 1,
+    step: 0.1,
+    connect: 'lower',
+    format: {
+      to: (value) => (Number.isInteger(value) ? value : value.toFixed(1)),
+      from: (value) => parseFloat(value),
+    },
+  });
+
   effectRadioInput.addEventListener('change', onEffectRadioChange);
 };
