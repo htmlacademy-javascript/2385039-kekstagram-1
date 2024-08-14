@@ -8,7 +8,7 @@ const pictureModalCloseElement = document.querySelector('.big-picture__cancel');
 const socialCommentsCount = document.querySelector('.social__comment-count');
 const newCommentsLoader = document.querySelector('.comments-loader');
 
-function openPiсtureModal() {
+function openPictureModal() {
   pictureModalElement.classList.remove('hidden');
   socialCommentsCount.classList.add('hidden');
   newCommentsLoader.classList.add('hidden');
@@ -41,7 +41,7 @@ const onPictureContainerClick = (evt, data) => {
   const currentPictureData = data.find((item) => item.id === parentElementId);
 
   if (currentPictureData) {
-    openPiсtureModal();
+    openPictureModal();
     renderFullsizePicture(currentPictureData);
   }
 };

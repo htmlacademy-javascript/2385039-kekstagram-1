@@ -1,9 +1,9 @@
 import { isEscapeKey } from './utils.js';
-import { pristine } from './validate-form.js';
+import { validateForm, resetValidation } from './validate-form.js';
 import { resetScaleValue } from './scale.js';
 import { resetEffects } from './effect.js';
 import { sendData } from './api.js';
-import { isOpenAlertMessage } from './message.js';
+import { openAlertMessage } from './message.js';
 
 const pictureUploadForm = document.querySelector('.img-upload__form');
 const pictureUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -32,7 +32,7 @@ function closeUploadModal() {
   pictureUploadForm.reset();
   resetScaleValue();
   resetEffects();
-  pristine.reset();
+  resetValidation();
 
   pictureUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -56,29 +56,34 @@ const unblockSubmitButton = () => {
   submitButton.disabled = false;
 };
 
-const isResetUploadForm = () => {
+const resetUploadForm = () => {
   pictureUploadForm.reset();
   closeUploadModal();
 };
 
-export const setFormSubmit = (success) => {
-  const onFormSubmit = (evt) => {
-    evt.preventDefault();
-    const isValid = pristine.validate();
-    if (isValid) {
-      isOpenAlertMessage('success');
-      blockSubmitButton();
-      isResetUploadForm();
-      sendData(new FormData(evt.target))
-        .then(success)
-        .catch((error) => {
-          isOpenAlertMessage(error, 'error');
-        })
-        .finally(unblockSubmitButton);
-    }
-  };
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  const isValid = validateForm();
+  if (isValid) {
+    blockSubmitButton();
+
+    sendData(new FormData(evt.target))
+      .then(() => {
+        resetUploadForm();
+        openAlertMessage('success');
+      })
+      .catch((error) => {
+        openAlertMessage(error, 'error');
+      })
+      .finally(unblockSubmitButton);
+  }
+};
+
+
+export const setFormSubmit = () => {
   pictureUploadForm.addEventListener('submit', onFormSubmit);
   pictureUploadInput.addEventListener('change', () => {
     openUploadModal();
   });
 };
+

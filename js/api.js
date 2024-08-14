@@ -3,12 +3,15 @@ const Route = {
   GET_DATA: '/data',
   SEND_DATA: '/',
 };
+
 const Method = {
   GET: 'GET',
   POST: 'POST',
 };
+
 const ErrorText = {
   GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
+  SEND_DATA: '',
 };
 
 const load = (route, errorText, method = Method.GET, body = null) =>
@@ -25,4 +28,4 @@ const load = (route, errorText, method = Method.GET, body = null) =>
 
 export const getData = () => load(Route.GET_DATA, ErrorText.GET_DATA);
 
-export const sendData = (body) => load(Route.SEND_DATA, Method.POST, body);
+export const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, Method.POST, body);

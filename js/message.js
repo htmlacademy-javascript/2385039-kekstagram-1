@@ -1,10 +1,6 @@
 import { isEscapeKey } from './utils.js';
 
-function isOutsideKey(evt) {
-  return evt.target.matches('section');
-}
-
-export const isOpenAlertMessage = (result, message, buttonText) => {
+export const openAlertMessage = (result, message, buttonText) => {
   const templateAlert = document
     .querySelector(`#${result}`)
     .content.querySelector(`.${result}`);
@@ -17,35 +13,19 @@ export const isOpenAlertMessage = (result, message, buttonText) => {
     resultButtonClose.textContent = buttonText;
   }
 
-  function closeAlertMessage() {
+  const close = () => {
     alert.remove();
-
-    resultButtonClose.removeEventListener('click', closeAlertMessage);
-    document.removeEventListener('click', closeClickHandler);
     document.removeEventListener('keydown', closeKeydownHandler);
-  }
+  };
 
   function closeKeydownHandler(evt) {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      alert.remove();
-    }
-
-    resultButtonClose.removeEventListener('click', closeAlertMessage);
-    document.removeEventListener('click', closeClickHandler);
-    document.removeEventListener('keydown', closeKeydownHandler);
-  }
-
-  function closeClickHandler(evt) {
-    if (isOutsideKey(evt)) {
-      evt.preventDefault();
-      alert.remove();
+      close();
     }
   }
 
   document.body.append(alert);
-
-  resultButtonClose.addEventListener('click', closeAlertMessage);
-  document.addEventListener('click', closeClickHandler);
+  resultButtonClose.addEventListener('click', () => close());
   document.addEventListener('keydown', closeKeydownHandler);
 };
