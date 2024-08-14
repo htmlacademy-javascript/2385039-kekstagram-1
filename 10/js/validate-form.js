@@ -10,7 +10,7 @@ const HASHTAG_ERRORS = {
     'Хэш-тег начинается с символа # (решётка), и после решётки добавьте буквы и числа',
 };
 
-export const pristine = new Pristine(
+const pristine = new Pristine(
   pictureUploadForm,
   {
     classTo: 'img-upload__field-wrapper',
@@ -47,3 +47,7 @@ pristine.addValidator(
   },
   HASHTAG_ERRORS.regexp
 );
+
+export const validateForm = () => pristine.validate();
+
+export const resetValidation = () => pristine.reset();

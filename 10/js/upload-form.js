@@ -1,13 +1,9 @@
-import { isEscapeKey, showAlert } from './utils.js';
-import { sendData } from './api.js';
-import { pristine } from './validate-form.js';
+import { isEscapeKey } from './utils.js';
+import { validateForm, resetValidation } from './validate-form.js';
 import { resetScaleValue } from './scale.js';
 import { resetEffects } from './effect.js';
-
-const SubmitButtonText = {
-  IDLE: 'Опубликовать',
-  SENDING: 'Опубликовываю...',
-};
+import { sendData } from './api.js';
+import { openAlertMessage } from './message.js';
 
 const pictureUploadForm = document.querySelector('.img-upload__form');
 const pictureUploadOverlay = document.querySelector('.img-upload__overlay');
@@ -36,7 +32,7 @@ function closeUploadModal() {
   pictureUploadForm.reset();
   resetScaleValue();
   resetEffects();
-  pristine.reset();
+  resetValidation();
 
   pictureUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -54,30 +50,40 @@ const openUploadModal = () => {
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
 };
 
 const unblockSubmitButton = () => {
   submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
 };
 
-export const setupValidation = (onSuccess) => {
-  const onFormSubmit = (evt) => {
-    evt.preventDefault();
-    const isValid = pristine.validate();
-    if (isValid) {
-      blockSubmitButton();
-      sendData(new FormData(evt.target))
-        .then(onSuccess)
-        .catch((err) => {
-          showAlert(err.message);
-        })
-        .finally(unblockSubmitButton);
-    }
-  };
+const resetUploadForm = () => {
+  pictureUploadForm.reset();
+  closeUploadModal();
+};
+
+const onFormSubmit = (evt) => {
+  evt.preventDefault();
+  const isValid = validateForm();
+  if (isValid) {
+    blockSubmitButton();
+
+    sendData(new FormData(evt.target))
+      .then(() => {
+        resetUploadForm();
+        openAlertMessage('success');
+      })
+      .catch((error) => {
+        openAlertMessage(error, 'error');
+      })
+      .finally(unblockSubmitButton);
+  }
+};
+
+
+export const setFormSubmit = () => {
   pictureUploadForm.addEventListener('submit', onFormSubmit);
   pictureUploadInput.addEventListener('change', () => {
     openUploadModal();
   });
 };
+
