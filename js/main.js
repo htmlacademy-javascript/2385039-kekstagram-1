@@ -1,13 +1,22 @@
-import { createContent } from './data.js';
 import { renderPictures } from './picture-render.js';
 import { initPicturePreview } from './gallery.js';
-import { setupValidation } from './upload-form.js';
 import { initScale } from './scale.js';
-import { initEffect } from './effect.js';
+import { initEffects } from './effect.js';
+import { showAlert } from './utils.js';
+import { getData } from './api.js';
+import { setFormSubmit } from './upload-form.js';
 
-const data = createContent();
-renderPictures(data);
-initPicturePreview(data);
-setupValidation();
+
+initPicturePreview();
 initScale();
-initEffect();
+initEffects();
+
+getData()
+  .then((data) => {
+    renderPictures(data);
+  })
+  .catch((err) => {
+    showAlert(err.message);
+  });
+
+setFormSubmit();
