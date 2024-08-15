@@ -7,6 +7,7 @@ import { openAlertMessage } from './message.js';
 
 const pictureUploadForm = document.querySelector('.img-upload__form');
 const pictureUploadOverlay = document.querySelector('.img-upload__overlay');
+const filterUploadEffectLevel = document.querySelector('.effect-level');
 const buttonUploadCancel = document.querySelector('.img-upload__cancel');
 const pictureUploadInput =
   pictureUploadForm.querySelector('.img-upload__input');
@@ -41,6 +42,7 @@ function closeUploadModal() {
 }
 
 const openUploadModal = () => {
+  filterUploadEffectLevel.classList.add('hidden');
   pictureUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
@@ -72,13 +74,12 @@ const onFormSubmit = (evt) => {
         resetUploadForm();
         openAlertMessage('success');
       })
-      .catch((error) => {
-        openAlertMessage(error, 'error');
+      .catch(() => {
+        openAlertMessage('error');
       })
       .finally(unblockSubmitButton);
   }
 };
-
 
 export const setFormSubmit = () => {
   pictureUploadForm.addEventListener('submit', onFormSubmit);
@@ -86,4 +87,3 @@ export const setFormSubmit = () => {
     openUploadModal();
   });
 };
-
