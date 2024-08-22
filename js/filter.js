@@ -1,15 +1,16 @@
 import { shuffleArray } from './utils.js';
 import { renderPictures } from './picture-render.js';
+import { debounce } from './utils.js';
 
 const pictureFilterContainer = document.querySelector('.img-filters');
 const filterButtons = document.querySelectorAll('.img-filters__button');
-const pictureContainer = document.querySelector('.pictures');
+const pictureContainerElement = document.querySelector('.pictures');
 
 const PICTURE_RANDOM_NUMBER = 10;
 let savedPictures = [];
 
 const clearPicturesContainer = () => {
-  const elements = pictureContainer.querySelectorAll('.picture');
+  const elements = pictureContainerElement.querySelectorAll('.picture');
   elements.forEach((element) => element.remove());
 };
 
@@ -25,7 +26,7 @@ const getFilteredPictures = (pictures, filterId) => {
         .slice()
         .sort((a, b) => b.comments.length - a.comments.length);
     case 'filter-default':
-      return pictures;
+      return savedPictures;
     default:
       return pictures;
   }
@@ -42,11 +43,10 @@ const onFilterFormClick = (evt) => {
 
   clearPicturesContainer();
   renderPictures(filteredPictures);
-  console.log({ filteredPictures });
 };
 
 export const activateFilters = (pictures) => {
   savedPictures = pictures.slice();
   pictureFilterContainer.classList.remove('img-filters--inactive');
-  pictureFilterContainer.addEventListener('click', onFilterFormClick);
+  pictureFilterContainer.addEventListener('click', debounce(onFilterFormClick));
 };
