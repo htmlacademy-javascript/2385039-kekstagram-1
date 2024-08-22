@@ -6,6 +6,7 @@ import { showAlert } from './utils.js';
 import { getData } from './api.js';
 import { setFormSubmit } from './upload-form.js';
 import { activateFilters } from './filter.js';
+import { debounce } from './utils.js';
 
 initPicturePreview();
 initScale();
@@ -14,6 +15,7 @@ initEffects();
 getData()
   .then((data) => {
     activateFilters(data);
+    debounce();
     renderPictures(data);
   })
   .catch((err) => {

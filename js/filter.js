@@ -6,18 +6,15 @@ const filterButtons = document.querySelectorAll('.img-filters__button');
 const pictureContainer = document.querySelector('.pictures');
 
 const PICTURE_RANDOM_NUMBER = 10;
-
-let savedPictures;
+let savedPictures = [];
 
 const clearPicturesContainer = () => {
   const elements = pictureContainer.querySelectorAll('.picture');
   elements.forEach((element) => element.remove());
 };
 
-const getFilteredPictures = (filterId, pictures) => {
+const getFilteredPictures = (pictures, filterId) => {
   switch (filterId) {
-    case 'filter-default':
-      return pictures;
     case 'filter-random':
       return pictures
         .slice()
@@ -27,6 +24,8 @@ const getFilteredPictures = (filterId, pictures) => {
       return pictures
         .slice()
         .sort((a, b) => b.comments.length - a.comments.length);
+    case 'filter-default':
+      return pictures;
     default:
       return pictures;
   }
@@ -39,7 +38,7 @@ const onFilterFormClick = (evt) => {
   );
 
   target.classList.add('img-filters__button--active');
-  const filteredPictures = getFilteredPictures(target.id, savedPictures);
+  const filteredPictures = getFilteredPictures(savedPictures, target.id);
 
   clearPicturesContainer();
   renderPictures(filteredPictures);
