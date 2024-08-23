@@ -5,7 +5,7 @@ import { initEffects } from './effect.js';
 import { showAlert } from './utils.js';
 import { getData } from './api.js';
 import { setFormSubmit } from './upload-form.js';
-
+import { activateFilters } from './filter.js';
 
 initPicturePreview();
 initScale();
@@ -14,6 +14,7 @@ initEffects();
 getData()
   .then((data) => {
     renderPictures(data);
+    activateFilters(data);
   })
   .catch((err) => {
     showAlert(err.message);
