@@ -17,10 +17,7 @@ const clearPicturesContainer = () => {
 const getFilteredPictures = (pictures, filterId) => {
   switch (filterId) {
     case 'filter-random':
-      return pictures
-        .slice()
-        .sort(shuffleArray(pictures))
-        .slice(0, PICTURE_RANDOM_NUMBER);
+      return shuffleArray(pictures).slice(0, PICTURE_RANDOM_NUMBER);
     case 'filter-discussed':
       return pictures
         .slice()
@@ -34,15 +31,17 @@ const getFilteredPictures = (pictures, filterId) => {
 
 const onFilterFormClick = (evt) => {
   const target = evt.target;
-  filterButtons.forEach((button) =>
-    button.classList.remove('img-filters__button--active')
-  );
+  if (target && target.matches('.img-filters__button')) {
+    filterButtons.forEach((button) =>
+      button.classList.remove('img-filters__button--active')
+    );
 
-  target.classList.add('img-filters__button--active');
-  const filteredPictures = getFilteredPictures(savedPictures, target.id);
+    target.classList.add('img-filters__button--active');
+    const filteredPictures = getFilteredPictures(savedPictures, target.id);
 
-  clearPicturesContainer();
-  renderPictures(filteredPictures);
+    clearPicturesContainer();
+    renderPictures(filteredPictures);
+  }
 };
 
 export const activateFilters = (pictures) => {

@@ -25,12 +25,14 @@ export const showAlert = (message) => {
 };
 
 export const shuffleArray = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
+  const savedPictures = array.slice();
+  for (let i = savedPictures.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    const temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
+    const temp = savedPictures[i];
+    savedPictures[i] = savedPictures[j];
+    savedPictures[j] = temp;
   }
+  return savedPictures;
 };
 
 export const debounce = (callback, timeoutDelay = RERENDER_DELAY) => {
