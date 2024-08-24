@@ -6,6 +6,7 @@ import { showAlert } from './utils.js';
 import { getData } from './api.js';
 import { setFormSubmit } from './upload-form.js';
 import { activateFilters } from './filter.js';
+import './upload-picture.js';
 
 initPicturePreview();
 initScale();
