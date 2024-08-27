@@ -8,7 +8,7 @@ import { setFormSubmit } from './upload-form.js';
 import { activateFilters } from './filter.js';
 import { initPictureUpload } from './upload-picture.js';
 
-initPicturePreview();
+
 initScale();
 initEffects();
 initPictureUpload();
@@ -17,6 +17,7 @@ getData()
   .then((data) => {
     renderPictures(data);
     activateFilters(data);
+    initPicturePreview(data);
   })
   .catch((err) => {
     showAlert(err.message);

@@ -66,7 +66,7 @@ export const renderFullsizePicture = ({
   fullsizePicture.querySelector('.social__caption').alt = description;
 
   commentsContainer.innerHTML = '';
-  pictureElement.addEventListener('click', onShowMoreButtonClick);
   createComments(comments);
   savedComments = comments;
+
 };
