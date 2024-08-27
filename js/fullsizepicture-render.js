@@ -48,10 +48,7 @@ const onShowMoreButtonClick = () => {
   socialCommentsCount.firstChild.textContent = `${commentsContainer.children.length} из `;
   commentsContainer.appendChild(renderMoreComments);
 
-  if (
-    savedComments.length ===
-    commentsContainer.children.length + STEP_COMMENTS
-  ) {
+  if (savedComments.length === moreComments.length) {
     commentsLoader.classList.add('hidden');
   } else {
     commentsLoader.classList.remove('hidden');
@@ -70,8 +67,8 @@ export const renderFullsizePicture = ({
     comments.length;
   fullsizePicture.querySelector('.social__caption').alt = description;
   commentsContainer.innerHTML = '';
+
   commentsLoader.addEventListener('click', onShowMoreButtonClick);
   savedComments = comments;
-
   savedFirstListComments(comments);
 };
