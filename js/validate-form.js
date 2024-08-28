@@ -25,6 +25,7 @@ pristine.addValidator(
   hashtagsInput,
   (value) => {
     const hashtagsArray = value.toLowerCase().trim().split(' ');
+
     return hashtagsArray.length === new Set(hashtagsArray).size;
   },
   HASHTAG_ERRORS.duplicate
@@ -40,6 +41,7 @@ pristine.addValidator(
   hashtagsInput,
   (value) => {
     const hashtagsArray = value.split(' ');
+
     return (
       value[0] === HASHTAG_REGEX[0] ||
       hashtagsArray.every((hashtag) => HASHTAG_REGEX.test(hashtag))
