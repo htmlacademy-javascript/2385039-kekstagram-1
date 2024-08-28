@@ -83,7 +83,5 @@ const onFormSubmit = (evt) => {
 
 export const setFormSubmit = () => {
   pictureUploadForm.addEventListener('submit', onFormSubmit);
-  pictureUploadInput.addEventListener('change', () => {
-    openUploadModal();
-  });
+  pictureUploadInput.addEventListener('change', openUploadModal);
 };

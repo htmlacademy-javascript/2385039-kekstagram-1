@@ -1,4 +1,4 @@
-import { isEscapeKey } from './utils.js';
+import { isEnterKey, isEscapeKey } from './utils.js';
 
 export const openAlertMessage = (result, message, buttonText) => {
   const templateAlert = document
@@ -19,7 +19,7 @@ export const openAlertMessage = (result, message, buttonText) => {
   };
 
   function closeKeydownHandler(evt) {
-    if (isEscapeKey(evt)) {
+    if (isEscapeKey(evt) || isEnterKey(evt)) {
       evt.preventDefault();
       close();
     }
@@ -28,4 +28,5 @@ export const openAlertMessage = (result, message, buttonText) => {
   document.body.append(alert);
   resultButtonClose.addEventListener('click', () => close());
   document.addEventListener('keydown', closeKeydownHandler);
+  document.addEventListener('click', () => close());
 };
