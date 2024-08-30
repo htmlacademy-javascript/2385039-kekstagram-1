@@ -1,5 +1,5 @@
 import { isEscapeKey } from './utils.js';
-import { renderFullsizePicture } from './fullsizepicture-render.js';
+import { renderFullSizePicture } from './fullsizepicture-render.js';
 
 const pictureModalElement = document.querySelector('.big-picture');
 const pictureContainerElement = document.querySelector('.pictures');
@@ -38,7 +38,7 @@ const onPictureContainerClick = (evt, data) => {
 
   if (currentPictureData) {
     openPictureModal();
-    renderFullsizePicture(currentPictureData);
+    renderFullSizePicture(currentPictureData);
   }
 };
 

@@ -4,8 +4,10 @@ const commentsContainer = document.querySelector('.social__comments');
 const socialCommentsCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
 
+const COMMENTS_STEP = 5;
+
+
 let savedComments = [];
-const STEP_COMMENTS = 5;
 
 const createSocialCommentElement = ({ avatar, message, name }) => {
   const socialComment = socialCommentClone.cloneNode(true);
@@ -26,36 +28,33 @@ const createComments = (comments) => {
   commentsContainer.append(fragment);
 };
 
-const savedFirstListComments = (comments) => {
-  const displayedComments = comments.slice(0, STEP_COMMENTS);
-  const renderFirstListComments = createComments(displayedComments);
+const renderFirstListComments = (comments) => {
+  const displayedComments = comments.slice(0, COMMENTS_STEP);
+  createComments(displayedComments);
   socialCommentsCount.firstChild.textContent = `${displayedComments.length} из `;
-  commentsContainer.appendChild(renderFirstListComments);
+  commentsLoader.classList.remove('hidden');
 
-  if (displayedComments.length === savedComments.length) {
+  if (displayedComments.length <= savedComments.length) {
     commentsLoader.classList.add('hidden');
-  } else {
-    commentsLoader.classList.remove('hidden');
   }
 };
 
 const onShowMoreButtonClick = () => {
   const moreComments = savedComments.slice(
     commentsContainer.children.length,
-    commentsContainer.children.length + STEP_COMMENTS
+    commentsContainer.children.length + COMMENTS_STEP
   );
-  const renderMoreComments = createComments(moreComments);
+  createComments(moreComments);
   socialCommentsCount.firstChild.textContent = `${commentsContainer.children.length} из `;
-  commentsContainer.appendChild(renderMoreComments);
 
-  if (savedComments.length === moreComments.length) {
+
+  if (commentsContainer.children.length === savedComments.length) {
     commentsLoader.classList.add('hidden');
-  } else {
-    commentsLoader.classList.remove('hidden');
+
   }
 };
 
-export const renderFullsizePicture = ({
+export const renderFullSizePicture = ({
   url,
   likes,
   comments,
@@ -67,8 +66,15 @@ export const renderFullsizePicture = ({
     comments.length;
   fullsizePicture.querySelector('.social__caption').alt = description;
   commentsContainer.innerHTML = '';
+  commentsLoader.classList.add('hidden');
 
-  commentsLoader.addEventListener('click', onShowMoreButtonClick);
+  if (comments.length <= COMMENTS_STEP) {
+    socialCommentsCount.firstChild.textContent = `${comments.length} из `;
+    createComments(comments);
+  } else {
+    commentsLoader.addEventListener('click', onShowMoreButtonClick);
+    renderFirstListComments(comments);
+
+  }
   savedComments = comments;
-  savedFirstListComments(comments);
 };
