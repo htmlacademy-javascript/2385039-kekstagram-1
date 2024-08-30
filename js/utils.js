@@ -2,6 +2,7 @@ const ALERT_SHOW_TIME = 5000;
 const RERENDER_DELAY = 500;
 
 export const isEscapeKey = (evt) => evt.key === 'Escape';
+export const isEnterKey = (evt) => evt.key === 'Enter';
 
 export const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -32,11 +33,13 @@ export const shuffleArray = (array) => {
     savedPictures[i] = savedPictures[j];
     savedPictures[j] = temp;
   }
+
   return savedPictures;
 };
 
 export const debounce = (callback, timeoutDelay = RERENDER_DELAY) => {
   let timeoutId;
+
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);

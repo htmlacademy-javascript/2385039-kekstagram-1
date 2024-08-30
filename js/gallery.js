@@ -1,17 +1,13 @@
 import { isEscapeKey } from './utils.js';
-import { renderFullsizePicture } from './fullsizepicture-render.js';
+import { renderFullSizePicture } from './fullsizepicture-render.js';
 
 const pictureModalElement = document.querySelector('.big-picture');
 const pictureContainerElement = document.querySelector('.pictures');
 const pictureModalCloseElement = document.querySelector('.big-picture__cancel');
 
-const socialCommentsCount = document.querySelector('.social__comment-count');
-const newCommentsLoader = document.querySelector('.comments-loader');
 
 function openPictureModal() {
   pictureModalElement.classList.remove('hidden');
-  socialCommentsCount.classList.add('hidden');
-  newCommentsLoader.classList.add('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
 }
@@ -42,7 +38,7 @@ const onPictureContainerClick = (evt, data) => {
 
   if (currentPictureData) {
     openPictureModal();
-    renderFullsizePicture(currentPictureData);
+    renderFullSizePicture(currentPictureData);
   }
 };
 

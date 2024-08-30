@@ -7,16 +7,22 @@ const previews = document.querySelectorAll('.effects__preview');
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
-fileChooser.addEventListener('change', (evt) => {
+const onInputFileChange = (evt) => {
   const file = evt.target.files[0];
   const fileName = file.name.toLowerCase();
 
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
   if (matches) {
-    picturePreview.src = URL.createObjectURL(file);
+    const picture = URL.createObjectURL(file);
+    picturePreview.src = picture;
     previews.forEach((preview) => {
-      preview.style.backgroundImage = `url(${picturePreview.src})`;
+      preview.style.backgroundImage = `url(${picture})`;
     });
   }
-});
+};
+
+export const initPictureUpload = () => {
+  fileChooser.addEventListener('change', onInputFileChange);
+};
+
