@@ -6,7 +6,6 @@ const commentsLoader = document.querySelector('.comments-loader');
 
 const COMMENTS_STEP = 5;
 
-
 let savedComments = [];
 
 const createSocialCommentElement = ({ avatar, message, name }) => {
@@ -47,10 +46,8 @@ const onShowMoreButtonClick = () => {
   createComments(moreComments);
   socialCommentsCount.firstChild.textContent = `${commentsContainer.children.length} из `;
 
-
   if (commentsContainer.children.length === savedComments.length) {
     commentsLoader.classList.add('hidden');
-
   }
 };
 
@@ -69,12 +66,11 @@ export const renderFullSizePicture = ({
   commentsLoader.classList.add('hidden');
 
   if (comments.length <= COMMENTS_STEP) {
-    socialCommentsCount.firstChild.textContent = `${comments.length} из `;
     createComments(comments);
+    socialCommentsCount.firstChild.textContent = `${comments.length} из `;
   } else {
-    commentsLoader.addEventListener('click', onShowMoreButtonClick);
     renderFirstListComments(comments);
-
+    commentsLoader.addEventListener('click', onShowMoreButtonClick);
   }
   savedComments = comments;
 };

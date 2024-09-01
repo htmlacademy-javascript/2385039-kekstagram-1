@@ -71,10 +71,11 @@ const onFormSubmit = (evt) => {
 
     sendData(new FormData(evt.target))
       .then(() => {
-        resetUploadForm();
         openAlertMessage('success');
+        resetUploadForm();
       })
       .catch(() => {
+        openUploadModal();
         openAlertMessage('error');
       })
       .finally(unblockSubmitButton);
