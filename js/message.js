@@ -15,18 +15,27 @@ export const openAlertMessage = (result, message, buttonText) => {
 
   const close = () => {
     alert.remove();
-    document.removeEventListener('keydown', closeKeydownHandler);
+    document.removeEventListener('keydown', closeEscKeyHandler);
+    document.removeEventListener('click', closeEnterKeyHandler);
   };
 
-  function closeKeydownHandler(evt) {
-    if (isEscapeKey(evt) || isEnterKey(evt)) {
+  function closeEscKeyHandler(evt) {
+    if (isEscapeKey(evt)) {
       evt.preventDefault();
-      close();
+      alert.remove();
+    }
+  }
+
+  function closeEnterKeyHandler(evt) {
+    if (isEnterKey(evt)) {
+      evt.preventDefault();
+      alert.remove();
     }
   }
 
   document.body.append(alert);
   resultButtonClose.addEventListener('click', () => close());
-  document.addEventListener('keydown', closeKeydownHandler);
-  document.addEventListener('click', () => close());
+  document.addEventListener('keydown', closeEscKeyHandler);
+  document.addEventListener('click', closeEnterKeyHandler);
+  document.body.classList.add('has-error');
 };

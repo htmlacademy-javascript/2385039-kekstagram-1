@@ -1,4 +1,4 @@
-const BASE_URL = 'https://28.javascript.htmlacademy.pro/kekstagram';
+const BASE_URL = 'https://32.javascript.htmlacademy.pro/kekstagram';
 const Route = {
   GET_DATA: '/data',
   SEND_DATA: '/',
@@ -10,7 +10,7 @@ const Method = {
 };
 
 const ErrorText = {
-  GET_DATA: 'Не удалось загрузить данные. Попробуйте обновить страницу',
+  GET_DATA: 'Ошибка загрузки данных. Попробуйте обновить страницу',
   SEND_DATA: '',
 };
 
