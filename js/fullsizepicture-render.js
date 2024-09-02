@@ -32,10 +32,6 @@ const renderFirstListComments = (comments) => {
   createComments(displayedComments);
   socialCommentsCount.firstChild.textContent = `${displayedComments.length} из `;
   commentsLoader.classList.remove('hidden');
-
-  if (displayedComments.length <= savedComments.length) {
-    commentsLoader.classList.add('hidden');
-  }
 };
 
 const onShowMoreButtonClick = () => {
@@ -63,6 +59,7 @@ export const renderFullSizePicture = ({
     comments.length;
   fullsizePicture.querySelector('.social__caption').alt = description;
   commentsContainer.innerHTML = '';
+  savedComments = comments;
   commentsLoader.classList.add('hidden');
 
   if (comments.length <= COMMENTS_STEP) {
@@ -72,5 +69,5 @@ export const renderFullSizePicture = ({
     renderFirstListComments(comments);
     commentsLoader.addEventListener('click', onShowMoreButtonClick);
   }
-  savedComments = comments;
+
 };

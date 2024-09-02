@@ -11,7 +11,7 @@ const filterUploadEffectLevel = document.querySelector('.effect-level');
 const buttonUploadCancel = document.querySelector('.img-upload__cancel');
 const pictureUploadInput =
   pictureUploadForm.querySelector('.img-upload__input');
-const hashtagsInput = pictureUploadForm.querySelector('.text__hashtags');
+const hashtagsInput = document.querySelector('.text__hashtags');
 const descriptionTextarea =
   pictureUploadForm.querySelector('.text__description');
 const submitButton = document.querySelector('.img-upload__submit');
@@ -27,7 +27,12 @@ const onUploadKeydown = (evt) => {
     evt.preventDefault();
     closeUploadModal();
   }
+  if (isEscapeKey(evt) && document.body.classList.contains('has-error')) {
+    evt.preventDefault();
+    openUploadModal();
+  }
 };
+
 
 function closeUploadModal() {
   pictureUploadForm.reset();
@@ -41,14 +46,14 @@ function closeUploadModal() {
   document.removeEventListener('keydown', onUploadKeydown);
 }
 
-const openUploadModal = () => {
+function openUploadModal() {
   filterUploadEffectLevel.classList.add('hidden');
   pictureUploadOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   buttonUploadCancel.addEventListener('click', closeUploadModal);
   document.addEventListener('keydown', onUploadKeydown);
-};
+}
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -75,7 +80,6 @@ const onFormSubmit = (evt) => {
         resetUploadForm();
       })
       .catch(() => {
-        openUploadModal();
         openAlertMessage('error');
       })
       .finally(unblockSubmitButton);

@@ -37,4 +37,5 @@ export const openAlertMessage = (result, message, buttonText) => {
   resultButtonClose.addEventListener('click', () => close());
   document.addEventListener('keydown', closeEscKeyHandler);
   document.addEventListener('click', closeEnterKeyHandler);
+  document.body.classList.add('has-error');
 };
