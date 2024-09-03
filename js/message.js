@@ -15,6 +15,7 @@ export const openAlertMessage = (result, message, buttonText) => {
 
   const close = () => {
     alert.remove();
+    document.body.classList.remove('has-error');
     document.removeEventListener('keydown', closeEscKeyHandler);
     document.removeEventListener('click', closeEnterKeyHandler);
   };
