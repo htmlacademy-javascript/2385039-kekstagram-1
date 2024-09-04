@@ -1,42 +1,45 @@
-import { isEnterKey, isEscapeKey } from './utils.js';
+import { isEscapeKey } from './utils.js';
 
-export const openAlertMessage = (result, message, buttonText) => {
+export const openAlertMessage = (type, message, buttonText) => {
   const templateAlert = document
-    .querySelector(`#${result}`)
-    .content.querySelector(`.${result}`);
+    .querySelector(`#${type}`)
+    .content.querySelector(`.${type}`);
   const alert = templateAlert.cloneNode(true);
 
-  const resultButtonClose = alert.querySelector(`.${result}__button`);
+  const buttonClose = alert.querySelector(`.${type}__button`);
+  const innerElement = alert.querySelector(`.${type}__inner`);
 
   if (message) {
-    alert.querySelector(`.${result}__title`).textContent = message;
-    resultButtonClose.textContent = buttonText;
+    alert.querySelector(`.${type}__title`).textContent = message;
+    buttonClose.textContent = buttonText;
   }
 
   const close = () => {
     alert.remove();
     document.body.classList.remove('has-error');
     document.removeEventListener('keydown', closeEscKeyHandler);
-    document.removeEventListener('click', closeEnterKeyHandler);
   };
 
   function closeEscKeyHandler(evt) {
     if (isEscapeKey(evt)) {
       evt.preventDefault();
-      alert.remove();
+      close();
     }
   }
 
-  function closeEnterKeyHandler(evt) {
-    if (isEnterKey(evt)) {
-      evt.preventDefault();
-      alert.remove();
+  const onAlertClick = (evt) => {
+    if ((evt.target.closest(`.${type}__inner`) === innerElement)) {
+      return;
     }
-  }
+    close();
+  };
 
   document.body.append(alert);
-  resultButtonClose.addEventListener('click', () => close());
+  alert.addEventListener('click', onAlertClick);
+  buttonClose.addEventListener('click', () => close());
   document.addEventListener('keydown', closeEscKeyHandler);
-  document.addEventListener('click', closeEnterKeyHandler);
-  document.body.classList.add('has-error');
+
+  if (type === 'error') {
+    document.body.classList.add('has-error');
+  }
 };

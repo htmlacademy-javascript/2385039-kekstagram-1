@@ -2,7 +2,6 @@ const ALERT_SHOW_TIME = 5000;
 const RERENDER_DELAY = 500;
 
 export const isEscapeKey = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
-export const isEnterKey = (evt) => evt.target.matches('section');
 
 export const showAlert = (message) => {
   const alertContainer = document.createElement('div');

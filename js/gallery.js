@@ -1,5 +1,5 @@
 import { isEscapeKey } from './utils.js';
-import { renderFullSizePicture } from './fullsizepicture-render.js';
+import { renderFullSizePicture } from './fullsize-picture-render.js';
 
 const pictureModalElement = document.querySelector('.big-picture');
 const pictureContainerElement = document.querySelector('.pictures');

@@ -22,15 +22,12 @@ const onUploadKeydown = (evt) => {
     !(
       hashtagsInput === document.activeElement ||
       descriptionTextarea === document.activeElement
-    )
+    ) && !document.body.classList.contains('has-error')
   ) {
     evt.preventDefault();
     closeUploadModal();
   }
-  if (isEscapeKey(evt) && document.body.classList.contains('has-error')) {
-    evt.preventDefault();
-    openUploadModal();
-  }
+
 };
 
 
@@ -76,8 +73,9 @@ const onFormSubmit = (evt) => {
 
     sendData(new FormData(evt.target))
       .then(() => {
-        openAlertMessage('success');
         resetUploadForm();
+        openAlertMessage('success');
+
       })
       .catch(() => {
         openAlertMessage('error');
