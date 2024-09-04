@@ -22,12 +22,12 @@ const onUploadKeydown = (evt) => {
     !(
       hashtagsInput === document.activeElement ||
       descriptionTextarea === document.activeElement
-    ) && document.body.classList.contains('has-error')
+    ) && !document.body.classList.contains('has-error')
   ) {
-    return;
+    evt.preventDefault();
+    closeUploadModal();
   }
-  evt.preventDefault();
-  closeUploadModal();
+
 };
 
 

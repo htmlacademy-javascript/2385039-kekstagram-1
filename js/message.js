@@ -28,7 +28,7 @@ export const openAlertMessage = (type, message, buttonText) => {
   }
 
   const onAlertClick = (evt) => {
-    if (evt.target.closest(`.${type}__inner` === innerElement)) {
+    if ((evt.target.closest(`.${type}__inner`) === innerElement)) {
       return;
     }
     close();
