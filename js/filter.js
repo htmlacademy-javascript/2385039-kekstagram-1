@@ -29,6 +29,13 @@ const getFilteredPictures = (pictures, filterId) => {
   }
 };
 
+const processFilter = debounce((id) => {
+  const filteredPictures = getFilteredPictures(savedPictures, id);
+
+  debounce(clearPicturesContainer());
+  renderPictures(filteredPictures);
+});
+
 const onFilterFormClick = (evt) => {
   const target = evt.target;
   if (target && target.matches('.img-filters__button')) {
@@ -37,15 +44,12 @@ const onFilterFormClick = (evt) => {
     );
 
     target.classList.add('img-filters__button--active');
-    const filteredPictures = getFilteredPictures(savedPictures, target.id);
-
-    clearPicturesContainer();
-    renderPictures(filteredPictures);
+    processFilter(target.id);
   }
 };
 
 export const activateFilters = (pictures) => {
   savedPictures = pictures.slice();
   pictureFilterContainer.classList.remove('img-filters--inactive');
-  pictureFilterContainer.addEventListener('click', debounce(onFilterFormClick));
+  pictureFilterContainer.addEventListener('click', onFilterFormClick);
 };

@@ -8,7 +8,6 @@ import { setFormSubmit } from './upload-form.js';
 import { activateFilters } from './filter.js';
 import { initPictureUpload } from './upload-picture.js';
 
-
 initScale();
 initEffects();
 initPictureUpload();

@@ -5,7 +5,6 @@ const pictureModalElement = document.querySelector('.big-picture');
 const pictureContainerElement = document.querySelector('.pictures');
 const pictureModalCloseElement = document.querySelector('.big-picture__cancel');
 
-
 function openPictureModal() {
   pictureModalElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
